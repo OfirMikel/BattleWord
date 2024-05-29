@@ -1,0 +1,143 @@
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: max-content;
+  position: fixed;
+  width: 100vw;
+  margin-top: 1rem;
+}
+
+header > * {
+  flex: 1;
+  text-align: center;
+  font-size: clamp(var(--small-text-phone), 3vw, var(--small-text));
+}
+header > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+header > div > img {
+  width: var(--logo-size);
+  border-radius: 50%;
+  border: 1px solid var(--dark-purple);
+}
+
+.screen-game {
+  position: absolute;
+  top: 28%;
+  left: 70%;
+  aspect-ratio: 1/2;
+  width: 15rem;
+  transform: rotate(-20deg);
+  opacity: 0.35;
+  z-index: 0;
+  position: fixed;
+  --parallax-speed: 15;
+  animation: parallax linear;
+  animation-timeline: scroll();
+}
+.center-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: 2;
+}
+.headline {
+  font-size: clamp(var(--large-text-phone), 15vw, var(--large-text));
+  font-weight: 400;
+  background: -webkit-linear-gradient(0deg, var(--dark-purple), var(--light-purple));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(10px 10px 8px #0000003b);
+}
+.semi-headline {
+  font-size: clamp(var(--mid-text-phone), 6vw, var(--mid-text));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.main-content {
+  position: absolute;
+  width: 100vw;
+  z-index: 4;
+  top: 100vh;
+}
+
+#wave {
+  position: absolute;
+  min-width: 100vw;
+  top: 70vh;
+  z-index: 3;
+  min-height: max-content;
+  overflow-x: hidden;
+}
+
+.dot {
+  height: 0.75vw;
+  width: 0.75vw;
+  --time: 1.5s;
+  background-color: var(--dark-purple);
+  border-radius: 50%;
+  display: inline-block;
+  animation: dots-wave var(--time) infinite both;
+  margin: 0;
+}
+
+.dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.arrow {
+  width: 20px;
+  height: 20px;
+  border-right: 3px solid rgb(255, 255, 255);
+  border-bottom: 3px solid rgb(255, 255, 255);
+  transform: rotate(45deg);
+  animation: arrow-wave 1s infinite;
+  animation-direction: alternate;
+  margin: 0 auto;
+}
+.arrow:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.arrow:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.arrow:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.arrows-animation {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 90vh;
+  margin: 0 auto;
+  z-index: 10;
+  animation: fade-out linear forwards;
+  animation-timeline: view();
+  animation-range: exit 10vh;
+}
+@media only screen and (max-width: 600px) {
+  header > div > img {
+    --logo-size: 3rem;
+  }
+  .arrows-animation {
+    animation: none;
+  }
+}

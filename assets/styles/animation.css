@@ -1,0 +1,65 @@
+@keyframes parallax {
+  to {
+    transform: translate(calc(var(--parallax-speed) * 100px));
+    rotate: 90deg;
+  }
+}
+@keyframes zoom-in {
+  to {
+    scale: calc(var(--parallax-speed));
+  }
+}
+@keyframes move-left {
+  to {
+    transform: translate(0px);
+  }
+}
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-2deg);
+  }
+}
+
+@keyframes fade-out {
+  35%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes arrow-wave {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes dots-wave {
+  0%,
+  20%,
+  100% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+@keyframes scaling-and-fading {
+  0% {
+    opacity: 0;
+  }
+  85%,
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}
