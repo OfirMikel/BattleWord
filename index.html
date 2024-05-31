@@ -21,15 +21,15 @@
   </head>
   <body>
     <header id="navbar">
-      <h2 class="text-navbar">HELLO</h2>
-      <h2 class="text-navbar">THE GAME</h2>
+      <h2 id="hello-navbar" class="text-navbar">HELLO</h2>
+      <h2 id="thegame-navbar" class="text-navbar">THE GAME</h2>
       <div>
         <img src="assets/images/logo.png" alt="Logo Of BattleWord" />
       </div>
-      <h2 class="text-navbar">ABOUT</h2>
-      <h2 class="text-navbar">CONTACT US</h2>
+      <h2 id="about-navbar" class="text-navbar">ABOUT</h2>
+      <h2 id="contactus-navbar" class="text-navbar">CONTACT US</h2>
     </header>
-    <div class="text center-flex">
+    <div id="page1-home" class="text center-flex">
       <h1 class="headline no-margin">BattleWord</h1>
       <h2 class="semi-headline no-margin jump">
         <span data-text="C">C</span>
@@ -45,6 +45,7 @@
         <span data-text="N">N</span>
       </h2>
     </div>
+
     <img class="screen-game" src="assets/images/game-view.png" alt="the mobile game" />
 
     <main class="main-content">
@@ -91,11 +92,21 @@
             provident consectetur dolore! Vero ea neque minima illo!
           </p>
           <div class="icons flex-row">
-            <img src="assets/images/icons/openU.png" alt="openU logo" />
-            <img src="assets/images/icons/github.png" alt="github logo" />
-            <img src="assets/images/icons/instagram.png" alt="instagram logo" />
-            <img src="assets/images/icons/codepen.png" alt="codepen logo" />
-            <img src="assets/images/icons/linkedin.png" alt="linkedin logo" />
+            <a href="https://www.openu.ac.il/">
+              <img src="assets/images/icons/openU.png" alt="openU logo" />
+            </a>
+            <a href="https://github.com/OfirMikel/BattleWord">
+              <img src="assets/images/icons/github.png" alt="github logo" />
+            </a>
+            <a href="https://codepen.io/ofir-mikel/pens/popular">
+              <img src="assets/images/icons/instagram.png" alt="instagram logo" />
+            </a>
+            <a href="https://www.openu.ac.il/">
+              <img src="assets/images/icons/codepen.png" alt="codepen logo" />
+            </a>
+            <a href="https://www.linkedin.com/in/ofir-mikel-72b15b242/">
+              <img src="assets/images/icons/linkedin.png" alt="linkedin logo" />
+            </a>
           </div>
         </div>
         <img src="assets/images/israelanduni.png" alt="books and uni hat with Israel flag" />
@@ -133,6 +144,10 @@
       <div class="arrow"></div>
       <div class="arrow"></div>
     </div>
-    <img src="assets/images/wave.svg" alt="wave" id="wave" />
+    <div id="image-wrapper">
+      <img src="assets/images/wave.svg" alt="wave" id="wave" />
+    </div>
   </body>
 </html>
+
+<script src="script.js"></script>
