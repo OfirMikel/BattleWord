@@ -3,13 +3,14 @@
   justify-content: center;
   gap: 2vw;
 }
-.icons > img {
+.icons > a > img {
   width: 2vw;
   aspect-ratio: 1/1;
   opacity: 0.5;
   transition: 0.5s;
+  cursor: pointer;
 }
-.icons > img:hover {
+.icons > a > img:hover {
   transition: 0.2s;
   opacity: 1;
 }
