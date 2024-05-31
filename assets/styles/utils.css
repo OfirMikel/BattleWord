@@ -21,7 +21,9 @@
   text-align: center;
   text-transform: uppercase;
   font-weight: 500;
-  color: #00000055;
+  color: #000000;
+  opacity: 0.5;
+  transition: 0.5s;
 }
 html,
 body {
@@ -51,7 +53,6 @@ body {
   padding: 0;
   font-family: system-ui;
   box-sizing: border-box;
-  /* border: 1px yellow solid; */
 }
 html {
   position: relative;
