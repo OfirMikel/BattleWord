@@ -3,7 +3,6 @@ header {
   align-items: center;
   justify-content: center;
   height: max-content;
-  position: fixed;
   width: 100vw;
   margin-top: 1rem;
 }
@@ -12,6 +11,12 @@ header > * {
   flex: 1;
   text-align: center;
   font-size: clamp(var(--small-text-phone), 3vw, var(--small-text));
+}
+.text-navbar:hover {
+  opacity: 1;
+  color: var(--dark-purple);
+  transition: 0.5s;
+  cursor: pointer;
 }
 header > div {
   display: flex;
@@ -43,7 +48,7 @@ header > div > img {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 100vh;
+  height: 80vh;
   width: 100vw;
   position: fixed;
   z-index: 2;
@@ -71,12 +76,16 @@ header > div > img {
 }
 
 #wave {
-  position: absolute;
-  min-width: 100vw;
+  min-width: 100%;
+  min-height: 100%;
+}
+#image-wrapper {
   top: 70vh;
-  z-index: 3;
+  overflow: hidden;
+  width: 100vw;
+  position: absolute;
   min-height: max-content;
-  overflow-x: hidden;
+  z-index: 3;
 }
 
 .dot {
