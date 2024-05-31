@@ -4,6 +4,12 @@
     rotate: 90deg;
   }
 }
+@keyframes move-down {
+  to {
+    transform: translateY(-50vh);
+  }
+}
+
 @keyframes zoom-in {
   to {
     scale: calc(var(--parallax-speed));
