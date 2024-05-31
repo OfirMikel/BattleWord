@@ -7,7 +7,6 @@
 }
 .container > * {
   flex: 1;
-  /* border: 1px red solid; */
 }
 .container {
   background-color: #fff;

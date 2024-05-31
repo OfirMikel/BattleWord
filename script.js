@@ -15,7 +15,7 @@ function smoothScrollTo(targetPosition, duration) {
 
   requestAnimationFrame(scrollStep);
 }
-function hideOnScroll(id) {
+function hideOnScroll(id, opacity) {
   const element = document.getElementById(id);
 
   if (!element) {
@@ -30,12 +30,13 @@ function hideOnScroll(id) {
     if (scrollPosition >= viewportHeight) {
       element.style.opacity = "0";
     } else {
-      element.style.opacity = "1";
+      element.style.opacity = opacity;
     }
   });
 }
 
-hideOnScroll("page1-home");
+hideOnScroll("page1-home", "1");
+hideOnScroll("image-wrapper-screen-game", "0.3");
 
 var helloNavbar = document.getElementById("hello-navbar");
 var theGameNavbar = document.getElementById("thegame-navbar");
@@ -55,5 +56,37 @@ aboutNavbar.addEventListener("click", function () {
 });
 
 contactUsNavbar.addEventListener("click", function () {
+  smoothScrollTo(contactUs.offsetTop + window.innerHeight, 1000);
+});
+
+var phoneNavbar = document.getElementById("phone-navbar");
+var phoneNavbarText = document.getElementById("text-wrapper-phone-navbar");
+phoneNavbar.addEventListener("click", function () {
+  if (phoneNavbarText.style.display === "block") {
+    phoneNavbarText.style.display = "none";
+    phoneNavbar.style.backgroundColor = "transparent";
+  } else {
+    phoneNavbarText.style.display = "block";
+    phoneNavbar.style.backgroundColor = "#d9d9d9";
+  }
+});
+
+var phonehelloNavbar = document.getElementById("phone-hello-navbar");
+var phonetheGameNavbar = document.getElementById("phone-thegame-navbar");
+var phoneaboutNavbar = document.getElementById("phone-about-navbar");
+var phonecontactUsNavbar = document.getElementById("phone-contactus-navbar");
+
+phonehelloNavbar.addEventListener("click", function () {
+  smoothScrollTo(0, 500);
+});
+phonetheGameNavbar.addEventListener("click", function () {
+  smoothScrollTo(theGame.offsetTop + window.innerHeight, 500);
+});
+
+phoneaboutNavbar.addEventListener("click", function () {
+  smoothScrollTo(about.offsetTop + window.innerHeight, 1000);
+});
+
+phonecontactUsNavbar.addEventListener("click", function () {
   smoothScrollTo(contactUs.offsetTop + window.innerHeight, 1000);
 });

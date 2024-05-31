@@ -1,47 +1,20 @@
-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: max-content;
-  width: 100vw;
-  margin-top: 1rem;
-}
-
-header > * {
-  flex: 1;
-  text-align: center;
-  font-size: clamp(var(--small-text-phone), 3vw, var(--small-text));
-}
-.text-navbar:hover {
-  opacity: 1;
-  color: var(--dark-purple);
-  transition: 0.5s;
-  cursor: pointer;
-}
-header > div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-header > div > img {
-  width: var(--logo-size);
-  border-radius: 50%;
-  border: 1px solid var(--dark-purple);
-}
-
-.screen-game {
-  position: absolute;
-  top: 28%;
-  left: 70%;
-  aspect-ratio: 1/2;
-  width: 15rem;
+#image-wrapper-screen-game {
+  position: fixed;
   transform: rotate(-20deg);
   opacity: 0.35;
-  z-index: 0;
-  position: fixed;
-  --parallax-speed: 15;
+  --parallax-speed: 4;
   animation: parallax linear;
-  animation-timeline: scroll();
+  animation-timeline: view();
+  animation-range: exit -35vh;
+  overflow-x: hidden;
+  left: 65%;
+  top: 35%;
+  width: 15rem;
+  z-index: 0;
+}
+.screen-game {
+  aspect-ratio: 1/2;
+  width: 100%;
 }
 .center-flex {
   display: flex;
@@ -143,10 +116,10 @@ header > div > img {
   animation-range: exit 10vh;
 }
 @media only screen and (max-width: 600px) {
-  header > div > img {
-    --logo-size: 3rem;
-  }
   .arrows-animation {
     animation: none;
+  }
+  #image-wrapper-screen-game {
+    display: none;
   }
 }

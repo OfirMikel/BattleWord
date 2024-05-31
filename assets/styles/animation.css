@@ -1,7 +1,6 @@
 @keyframes parallax {
   to {
-    transform: translate(calc(var(--parallax-speed) * 100px));
-    rotate: 90deg;
+    transform: rotate(30deg) translateX(500px);
   }
 }
 @keyframes move-down {

@@ -2,6 +2,7 @@
   height: 100vh;
   align-items: center;
   justify-content: center;
+  margin-bottom: 100px;
 }
 .wrapper > * {
   text-align: left;
@@ -124,8 +125,15 @@
     right: 0;
     z-index: -10;
     opacity: 0.2;
+    transform: translateY(0%) translateX(0%);
   }
   .wrapper {
     padding-left: 0px;
+  }
+  .buttons > button {
+    font-size: 1rem;
+  }
+  .buttons > .button-filled {
+    display: none;
   }
 }
