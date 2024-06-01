@@ -73,8 +73,12 @@
             <span class="fancy-text">Let the fun begin!</span>
           </p>
           <div class="flex-row buttons">
-            <button class="button-filled text" role="button">GET UPDATES</button>
-            <button class="button-hollow text" role="button">JOIN THE PROJECT</button>
+            <button id="button-get-updates" class="button-filled text" role="button">
+              GET UPDATES
+            </button>
+            <button id="button-join-project" class="button-hollow text" role="button">
+              JOIN THE PROJECT
+            </button>
           </div>
         </div>
         <img
@@ -121,19 +125,27 @@
       <div id="page4-contact-us" class="flex-column">
         <div class="container">
           <div class="form-container">
-            <form action="#">
+            <form
+              action="https://formsubmit.co/16f81c5093c5cca57fac12cdae5c9667 "
+              method="post"
+              enctype="text/plain"
+            >
               <h1 class="text headline-size-3">Get in touch with us</h1>
               <br />
               <span class="fancy-text">share your opinion with us</span>
-              <input type="name" placeholder="Name" />
-              <input type="email" placeholder="Email" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="box" />
+              <input type="name" name="name" placeholder="Name" required />
+              <input type="email" name="email" placeholder="Email" required />
               <textarea
                 type="message"
+                name="message"
                 placeholder="Message"
                 class="big-container-for-text"
+                required
               ></textarea>
               <br />
-              <button id="button-sign-in">Submit</button>
+              <button id="button-sign-in" type="submit">Submit</button>
             </form>
           </div>
           <div class="overlay-container">

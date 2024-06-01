@@ -90,3 +90,9 @@ phoneaboutNavbar.addEventListener("click", function () {
 phonecontactUsNavbar.addEventListener("click", function () {
   smoothScrollTo(contactUs.offsetTop + window.innerHeight, 1000);
 });
+
+var joinProjects = document.getElementById("button-get-updates");
+
+joinProjects.addEventListener("click", function () {
+  smoothScrollTo(contactUs.offsetTop + window.innerHeight, 1000);
+});
