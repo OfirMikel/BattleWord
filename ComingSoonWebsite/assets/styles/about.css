@@ -1,0 +1,69 @@
+.icons {
+  align-items: center;
+  justify-content: center;
+  gap: 2vw;
+}
+.icons > a > img {
+  width: 2vw;
+  aspect-ratio: 1/1;
+  opacity: 0.5;
+  transition: 0.5s;
+  cursor: pointer;
+}
+.icons > a > img:hover {
+  transition: 0.2s;
+  opacity: 1;
+}
+#page3-about > img {
+  max-height: 100%;
+}
+
+#page3-about > * {
+  min-height: 70vh;
+}
+
+#page3-about {
+  align-items: center;
+  justify-content: center;
+  max-width: 100vw;
+}
+
+#text-holder {
+  justify-content: center;
+  padding-left: 5%;
+}
+
+#text-holder > p {
+  padding-right: 5%;
+  padding-top: 5%;
+  max-width: 90vw;
+  padding-bottom: 5%;
+  font-size: clamp(var(--small-text-phone), 1.5vw, 1.2rem);
+  font-weight: 400;
+  background: -webkit-linear-gradient(0deg, #8844a0, #9f583a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media only screen and (max-width: 1400px) {
+  #page3-about {
+    position: relative;
+  }
+  #page3-about > img {
+    position: absolute;
+    right: 0;
+    max-width: 90vw;
+    z-index: -10;
+    opacity: 0.1;
+    object-fit: contain;
+  }
+  #text-holder > p {
+    line-height: 2rem;
+  }
+  .icons > a > img {
+    width: 2rem;
+    margin-top: 100px;
+    margin-bottom: 100px;
+  }
+}

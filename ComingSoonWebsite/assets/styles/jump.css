@@ -1,0 +1,69 @@
+:root {
+  --animation-duration: 2.5s;
+  --animation-translate: 1rem;
+}
+.jump span:before {
+  content: attr(data-text);
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+.jump span:before {
+  animation: animate var(--animation-duration) ease-in-out infinite;
+  color: var(--dark-purple);
+  -webkit-text-stroke: 0.1vw var(--dark-purple);
+  z-index: 10;
+}
+
+.jump span {
+  position: relative;
+  margin-left: -0.1vw;
+}
+
+.jump span:nth-child(2):before {
+  animation-delay: 0.1s;
+}
+
+.jump span:nth-child(3):before {
+  animation-delay: 0.2s;
+}
+
+.jump span:nth-child(4):before {
+  animation-delay: 0.3s;
+}
+
+.jump span:nth-child(5):before {
+  animation-delay: 0.4s;
+}
+
+.jump span:nth-child(6):before {
+  animation-delay: 0.5s;
+}
+
+.jump span:nth-child(7):before {
+  animation-delay: 0.6s;
+}
+.jump span:nth-child(8):before {
+  animation-delay: 0.7s;
+}
+.jump span:nth-child(9):before {
+  animation-delay: 0.8s;
+}
+.jump span:nth-child(10):before {
+  animation-delay: 0.9s;
+}
+.jump span:nth-child(11):before {
+  animation-delay: 1s;
+}
+
+@keyframes animate {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(var(--animation-translate), var(--animation-translate));
+  }
+}
