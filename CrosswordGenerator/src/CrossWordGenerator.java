@@ -12,7 +12,6 @@ public class CrossWordGenerator {
         wordsCol = new ArrayList<>();
         wordsRow = new ArrayList<>();
         wordsAll = new ArrayList<>();
-
     }
 
     public void createCrossWord(char[][] matrix, WordsTxtFIle wordsTxtFIle) {
@@ -34,11 +33,17 @@ public class CrossWordGenerator {
 
         Collections.sort(wordsAll, new WordComparator());
 
-        for (Word word : wordsAll) {
+        for (Word word : wordsAll){
+            findAndSetValidWords(word, wordsTxtFIle);
+        }
+
+        WaveFunctionCollapse(wordsTxtFIle , nextWordToCollapse());
+
+        for (Word word : wordsAll){
             word.print();
         }
 
-        System.out.println(wordsAll.size());
+
 
         utils.printCharColoredMatrix(matrix, utils.BLACK);
 
@@ -118,4 +123,65 @@ public class CrossWordGenerator {
 
     }
 
+    private void WaveFunctionCollapse(WordsTxtFIle wordsTxtFIle , Word word){
+        if (word == null || word.isSet){
+            return;
+        }
+
+        findAndSetValidWords(word,wordsTxtFIle);
+        collapseWord(word, wordsTxtFIle);
+
+    }
+
+    private Word nextWordToCollapse(){
+        Word minWord = wordsAll.get(0);
+        for (Word word : wordsAll) {
+            if (!word.isSet && word.getPossibleWords().size() < minWord.getPossibleWords().size()){
+                minWord = word;
+            }
+        }
+        return minWord;
+    }
+
+    private void collapseWord(Word word , WordsTxtFIle wordsTxtFIle){
+        if (word.isSet)
+            return;
+
+        word.setWordFromPossibleWords();
+        word.isSet = true;
+        ArrayList<String> arrayList= new ArrayList<>();
+        arrayList.add(word.myDetails.getWord());
+        word.setPossibleWords(arrayList);
+        propagateWord(word , wordsTxtFIle);
+    }
+
+    private void propagateWord(Word word , WordsTxtFIle wordsTxtFIle) {
+        if (word == null)
+            return;
+        for (int i = 0; i < word.myNeighbors.crossings.length; i++) {
+            int[] neighbor = word.myNeighbors.getCrossing(i);
+            int id = neighbor[0];
+            int indexInOtherWord = neighbor[1];
+            Word neighborWord = getWordByID(id);
+            char toPutInOtherWord = word.myDetails.getCharArray()[i];
+            if (neighborWord == null){
+                return;
+            }
+            neighborWord.myDetails.setCharInWord(toPutInOtherWord , indexInOtherWord);
+            findAndSetValidWords(neighborWord, wordsTxtFIle);
+        }
+    }
+
+    private void findAndSetValidWords(Word word ,WordsTxtFIle wordsTxtFIle){
+        ArrayList<String> possibleWords = wordsTxtFIle.getWordsThatValid(word.myDetails.getCharArray());
+        word.setPossibleWords(possibleWords);
+    }
+
+    private Word getWordByID(int id){
+        for (Word word : wordsAll) {
+            if(word.id == id)
+                return word;
+        }
+        return null;
+    }
 }

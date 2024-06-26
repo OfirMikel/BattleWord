@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -15,14 +17,49 @@ public class WordsTxtFIle {
         lengthOfWordsMaps = new int[maxWordLength];
     }
 
+
     public char[] getWord(char[] wordToFit){
         char[] word = new char[wordToFit.length];
-        int startIndex = lengthOfWordsMaps[wordToFit.length-1];
-        int endIndex = lengthOfWordsMaps[wordToFit.length] - 1;
-        System.out.println(startIndex + " " + endIndex);
+        int startIndex = lengthOfWordsMaps[wordToFit.length];
+        int endIndex = lengthOfWordsMaps[wordToFit.length+ 1] -1 ;
+        ArrayList<String> wordsThatFit = getAllWordsThatFit(wordToFit , startIndex , endIndex);
+        if (wordsThatFit.isEmpty())
+            return "not exist".toCharArray();
 
-        return word;
+        Random rand = new Random();
+
+        return wordsThatFit.get(rand.nextInt(wordsThatFit.size())).toCharArray();
     }
+
+    public  ArrayList<String> getWordsThatValid(char[] currentWord){
+        int startIndex = lengthOfWordsMaps[currentWord.length];
+        int endIndex = lengthOfWordsMaps[currentWord.length+ 1] -1 ;
+
+        return getAllWordsThatFit(currentWord , startIndex , endIndex);
+
+    }
+
+    private boolean containSubString(String word, String wordToFit){
+        for (int i = 0; i < word.length(); i++) {
+          if (!(word.charAt(i) == wordToFit.charAt(i) || wordToFit.charAt(i) == ' ')) {
+            return false;
+          }
+        }
+        return true;
+    }
+
+    private ArrayList<String> getAllWordsThatFit (char[] wordToFit, int startIndex, int endIndex){
+        ArrayList<String> wordsThatFit = new ArrayList<>();
+        for(int i = startIndex ; i < endIndex ; i++){
+            String word = words[i];
+            String wordFit = String.valueOf(wordToFit);
+            if(containSubString(word, wordFit)){
+                wordsThatFit.add(word);
+            }
+        }
+        return wordsThatFit;
+    }
+
 
     public void initializeWordArrayFromFile(String path){
         File file = new File(path);

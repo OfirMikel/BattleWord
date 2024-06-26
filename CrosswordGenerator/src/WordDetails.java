@@ -9,6 +9,9 @@ public class WordDetails {
         this.col = col;
         this.wordLength = wordLength;
         this.word = new char[wordLength];
+        for (int i = 0; i < wordLength; i++) {
+            this.word[i] = ' ';
+        }
     }
 
     public void setCol(int col) {
@@ -19,11 +22,14 @@ public class WordDetails {
         this.row = row;
     }
 
-    public void setWord(String word) {
-        this.word = word.toCharArray();
+    public void setWord(char[] word) {
+        this.word = word;
     }
     public String getWord(){
         return new String(word);
+    }
+    public char[] getCharArray(){
+        return word;
     }
 
     public void setCharInWord(char ch , int index) {
