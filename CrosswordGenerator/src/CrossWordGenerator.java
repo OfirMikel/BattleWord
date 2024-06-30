@@ -1,11 +1,19 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Stack;
+
 
 public class CrossWordGenerator {
     UtilsMethods utils;
     ArrayList<Word> wordsCol;
     ArrayList<Word> wordsRow;
     ArrayList<Word> wordsAll;
+
+    public static final String BRIGHT_RED = "\033[0;91m";
+    public static final String BRIGHT_GREEN = "\033[0;92m";
+    public static final String BRIGHT_BLUE = "\033[0;94m";
+    public static final String RESET = "\033[0m";
+    public static final String RED = "\033[0;31m";
 
     CrossWordGenerator() {
         utils = new UtilsMethods();
@@ -14,8 +22,19 @@ public class CrossWordGenerator {
         wordsAll = new ArrayList<>();
     }
 
-    public void createCrossWord(char[][] matrix, WordsTxtFIle wordsTxtFIle) {
+    public boolean CreateCrossWord(char[][] matrix, WordsTxtFIle wordsTxtFIle)
+    {
+        if (BuildCrossWord(matrix, wordsTxtFIle)) {
+            printGraph(wordsAll);
 
+            graphToMatrix(matrix, wordsAll);
+            utils.printCharColoredMatrix(matrix, utils.BLACK);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean BuildCrossWord(char[][] matrix, WordsTxtFIle wordsTxtFIle) {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 matrix[i][j] = 'A';
@@ -24,30 +43,24 @@ public class CrossWordGenerator {
 
         MatrixSetTitlePosition matrixSetTitlePosition = new MatrixSetTitlePosition(matrix);
         matrixSetTitlePosition.setMatrix();
-
         MapMatrixToGraph(matrix);
-
 
         wordsAll = new ArrayList<>(wordsCol);
         wordsAll.addAll(wordsRow);
 
-        Collections.sort(wordsAll, new WordComparator());
-
-        for (Word word : wordsAll){
+        for (Word word : wordsAll) {
             findAndSetValidWords(word, wordsTxtFIle);
         }
 
-        WaveFunctionCollapse(wordsTxtFIle , nextWordToCollapse());
+        Stack<Integer> path = new Stack<>();
 
-        for (Word word : wordsAll){
-            word.print();
+        return waveFunctionCollapse(wordsTxtFIle, (ArrayList<Word>) wordsAll.clone(), path, matrix, 0);
+    }
+
+    private void printGraph(ArrayList<Word> graph) {
+        for (Word word : graph) {
+            word.printWordWithoutNeighbors();
         }
-
-
-
-        utils.printCharColoredMatrix(matrix, utils.BLACK);
-
-
     }
 
     public void MapMatrixToGraph(char[][] matrix) {
@@ -123,39 +136,116 @@ public class CrossWordGenerator {
 
     }
 
-    private void WaveFunctionCollapse(WordsTxtFIle wordsTxtFIle , Word word){
-        if (word == null || word.isSet){
-            return;
-        }
-
-        findAndSetValidWords(word,wordsTxtFIle);
-        collapseWord(word, wordsTxtFIle);
-
-    }
-
-    private Word nextWordToCollapse(){
-        Word minWord = wordsAll.get(0);
-        for (Word word : wordsAll) {
-            if (!word.isSet && word.getPossibleWords().size() < minWord.getPossibleWords().size()){
-                minWord = word;
+    private void graphToMatrix(char[][] matrix, ArrayList<Word> wordArrayList) {
+        for (Word word : wordArrayList) {
+            if (word.id % 2 == 1) {
+                setWordInMatrix(word, matrix);
             }
         }
-        return minWord;
     }
 
-    private void collapseWord(Word word , WordsTxtFIle wordsTxtFIle){
+    private void setWordInMatrix(Word word, char[][] matrix) {
+        int row = word.myDetails.getMyPosition()[0];
+        int col = word.myDetails.getMyPosition()[1];
+        int wordLength = word.myDetails.getMyPosition()[2];
+        for (int i = 0; i < wordLength; i++) {
+            if (matrix[row][col + i] == utils.BLACK) {
+                continue;
+            }
+            matrix[row][col + i] = word.myDetails.getCharArray()[i];
+        }
+    }
+
+    private boolean waveFunctionCollapse(WordsTxtFIle wordsTxtFIle, ArrayList<Word> graph, Stack<Integer> path, char[][] matrix, int i) {
+        if (i >= 2500) {
+            System.out.println(BRIGHT_RED + "FAIL" + RESET);
+            return false;
+        }
+        Word word = !path.isEmpty() ? getWordByID(path.peek()) : nextWordToCollapse(graph);
+        Word nextWord = word;
+
+        while (waveFunctionIterateWord(wordsTxtFIle, nextWord)) {
+            path.push(nextWord.id);
+            word = nextWord;
+            nextWord = nextWordToCollapse(graph);
+        }
+        if (graphIsFilled(graph)) {
+            wordsAll = graph;
+            return true;
+        }
+
+        reCall(word, wordsTxtFIle);
+        word.isSet = false;
+        if (!path.isEmpty()) {
+            path.pop();
+        }
+        return waveFunctionCollapse(wordsTxtFIle, graph, path, matrix, i + 1);
+    }
+
+    private boolean waveFunctionIterateWord(WordsTxtFIle wordsTxtFIle, Word word) {
+        if (word == null || word.possibleWords.isEmpty()) {
+            return false;
+        }
+        collapseWord(word, wordsTxtFIle);
+        return true;
+    }
+
+    private Word nextWordToCollapse(ArrayList<Word> graph) {
+        int id = Integer.MAX_VALUE;
+        int currentLength = Integer.MAX_VALUE;
+        for (Word word : graph) {
+            if (word.myDetails.getWordLength() <= 1) {
+                continue;
+            }
+            if (!word.isSet && (word.getPossibleWords().size() < currentLength)) {
+                currentLength = word.getPossibleWords().size();
+                id = word.id;
+            }
+        }
+        if (id == Integer.MAX_VALUE) {
+            return null;
+        }
+        return getWordByID(id);
+    }
+
+    private boolean graphIsFilled(ArrayList<Word> graph) {
+        for (Word word : graph) {
+            if (!word.isSet && word.myDetails.getWordLength() > 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void collapseWord(Word word, WordsTxtFIle wordsTxtFIle) {
         if (word.isSet)
             return;
 
         word.setWordFromPossibleWords();
+        word.possibleWords.remove(word.myDetails.getWord());
         word.isSet = true;
-        ArrayList<String> arrayList= new ArrayList<>();
-        arrayList.add(word.myDetails.getWord());
-        word.setPossibleWords(arrayList);
-        propagateWord(word , wordsTxtFIle);
+        propagateWord(word, wordsTxtFIle);
+
     }
 
-    private void propagateWord(Word word , WordsTxtFIle wordsTxtFIle) {
+    private void reCall(Word word, WordsTxtFIle wordsTxtFIle) {
+        if (word == null)
+            return;
+        for (int i = 0; i < word.myNeighbors.crossings.length; i++) {
+            int[] neighbor = word.myNeighbors.getCrossing(i);
+            int id = neighbor[0];
+            int indexInOtherWord = neighbor[1];
+            Word neighborWord = getWordByID(id);
+            if (neighborWord == null || neighborWord.isSet) {
+                continue;
+            }
+            word.myDetails.setCharInWord(' ', i);
+            neighborWord.myDetails.setCharInWord(' ', indexInOtherWord);
+            findAndSetValidWords(neighborWord, wordsTxtFIle);
+        }
+    }
+
+    private void propagateWord(Word word, WordsTxtFIle wordsTxtFIle) {
         if (word == null)
             return;
         for (int i = 0; i < word.myNeighbors.crossings.length; i++) {
@@ -164,24 +254,39 @@ public class CrossWordGenerator {
             int indexInOtherWord = neighbor[1];
             Word neighborWord = getWordByID(id);
             char toPutInOtherWord = word.myDetails.getCharArray()[i];
-            if (neighborWord == null){
-                return;
+            if (neighborWord == null || neighborWord.isSet) {
+                continue;
             }
-            neighborWord.myDetails.setCharInWord(toPutInOtherWord , indexInOtherWord);
+            neighborWord.myDetails.setCharInWord(toPutInOtherWord, indexInOtherWord);
             findAndSetValidWords(neighborWord, wordsTxtFIle);
         }
     }
 
-    private void findAndSetValidWords(Word word ,WordsTxtFIle wordsTxtFIle){
+    private void findAndSetValidWords(Word word, WordsTxtFIle wordsTxtFIle) {
         ArrayList<String> possibleWords = wordsTxtFIle.getWordsThatValid(word.myDetails.getCharArray());
         word.setPossibleWords(possibleWords);
     }
 
-    private Word getWordByID(int id){
+    private Word getWordByID(int id) {
         for (Word word : wordsAll) {
-            if(word.id == id)
+            if (word.id == id)
                 return word;
         }
         return null;
+    }
+
+    public void printPath(Stack<Integer> path) {
+        int i = 1;
+        System.out.println();
+        for (int value : path) {
+            System.out.print(value);
+            if (i < path.size())
+                System.out.print(" --> ");
+            i++;
+        }
+        System.out.println();
+        for (int value : path) {
+            getWordByID(value).printWordWithoutNeighbors();
+        }
     }
 }

@@ -1,17 +1,19 @@
 
 
 public class Main {
-    final static int MatrixRows = 14;
-    final static int MatrixCols = 14;
+    final static int MatrixRows = 11;
+    final static int MatrixCols = 11;
     public static void main(String[] args) {
         char[][] matrix = new char[MatrixRows][MatrixCols];
         WordsTxtFIle wordsTxtFIle = new WordsTxtFIle();
         String RelativePath ="C:/Java Code/CrosswordGenerator/src/";
         wordsTxtFIle.initializeWordArrayFromFile(RelativePath + "mostUsed.txt");
 
-        CrossWordGenerator crossWord = new CrossWordGenerator();
-        crossWord.createCrossWord(matrix, wordsTxtFIle);
+        boolean flag = false;
+        while (!flag) {
+            CrossWordGenerator crossWord = new CrossWordGenerator();
+            flag = crossWord.CreateCrossWord(matrix, wordsTxtFIle);
+        }
     }
-
 }
 

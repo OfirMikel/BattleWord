@@ -51,8 +51,41 @@ public class Word {
         }
         if (possibleWords == null)
             return;
-        System.out.print("\n\t\t Possible Words: ");
+        if (isSet) {
+            System.out.print("\n\tisSet: "+GREEN+ isSet + RESET+ "\t Possible Words: ");
+        }
+        if (!isSet) {
+            System.out.print("\n\tisSet: "+RED+ isSet + RESET+ "\t Possible Words: ");
+        }
+
+
         System.out.println(possibleWords);
+        System.out.println();
+
+    }
+
+    public void printWordWithoutNeighbors(){
+        String GREEN = "\033[0;32m";
+        String BLUE = "\033[0;34m";
+        String RESET = "\033[0m";
+        String RED = "\033[0;31m";
+
+        int[] myPos = myDetails.getMyPosition();
+        int row = myPos[0];
+        int col = myPos[1];
+        int myLength = myPos[2];
+        System.out.println("ID:" + id +"\tMy Word: " + GREEN +  myDetails.getWord() + RESET +  "\n\tMy Starting Location: " + BLUE +"[" + row + ", " + col + "]" + RESET +
+                "\tMy Length: "+ BLUE + myLength  + RESET );
+        if (possibleWords == null)
+            return;
+        if (isSet) {
+            System.out.print("\n\tisSet: "+GREEN+ isSet + RESET+ "\t Possible Words: ");
+        }
+        if (!isSet) {
+            System.out.print("\n\tisSet: "+RED+ isSet + RESET+ "\t Possible Words: ");
+        }
+        System.out.println(possibleWords);
+        System.out.println();
 
     }
 }
